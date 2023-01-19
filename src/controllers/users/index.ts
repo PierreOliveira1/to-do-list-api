@@ -1,6 +1,9 @@
 import { Request, Response, Router } from 'express';
-import { prisma } from '../../database';
-import { User } from '../../dtos/user';
+import { prisma } from '@database';
+import { User } from '@dtos/user';
+import { generateToken } from '@utils/generateToken';
+import { generateRefreshToken } from '@utils/generateRefreshToken';
+import bcrypt from 'bcryptjs';
 
 const Users = Router();
 
@@ -18,12 +21,14 @@ Users.post('/', async (req: Request, res: Response) => {
 			.send({ error: true, message: 'User already exists' });
 	}
 
+	const hashPassword = await bcrypt.hash(password, 10);
+
 	const user = await prisma.user.create({
 		data: {
 			email,
 			fullName,
-			password
-		}
+			password: hashPassword,
+		},
 	});
 
 	if(!user) {
@@ -32,9 +37,12 @@ Users.post('/', async (req: Request, res: Response) => {
 			.send({ error: true, message: 'Error creating user' });
 	}
 
+	const token = generateToken(user.id);
+	const refreshToken = await generateRefreshToken(user.id);
+
 	return res
 		.status(201)
-		.send({ success: true, message: 'User created successfully' });
+		.send({ success: true, message: 'User created successfully', token, refreshToken });
 });
 
 Users.get('/:id', async (req: Request, res: Response) => {
@@ -54,7 +62,7 @@ Users.get('/:id', async (req: Request, res: Response) => {
 
 	return res
 		.status(200)
-		.send({ user });
+		.send({ id: user.id, fullName: user.fullName, email: user.email });
 });
 
 Users.patch('/:id', async (req: Request, res: Response) => {
@@ -79,6 +87,27 @@ Users.patch('/:id', async (req: Request, res: Response) => {
 	return res
 		.status(204)
 		.send({ success: true, message: 'User updated successfully' });
+});
+
+Users.delete('/:id', async (req: Request, res: Response) => {
+	const { id } = req.params;
+
+	try {
+		await prisma.user.delete({
+			where: {
+				id,
+			}
+		});
+
+		return res
+			.status(200)
+			.send({ success: true, message: 'User deleted successfully' });
+	} catch(err) {
+		console.log(err);
+		return res
+			.status(400)
+			.send({ error: true, message: 'Error deleting user' });
+	}
 });
 
 export default Users;
