@@ -40,7 +40,17 @@ async function createUser(req: Request, res: Response) {
 
 	return res
 		.status(201)
-		.send({ success: true, message: 'User created successfully', token, refreshToken });
+		.send({
+			success: true,
+			message: 'User created successfully',
+			token,
+			refreshToken,
+			user: {
+				id: user.id,
+				fullName: user.fullName,
+				email: user.email,
+			},
+		});
 }
 
 export { createUser };

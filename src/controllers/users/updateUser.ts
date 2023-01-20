@@ -1,8 +1,9 @@
 import { prisma } from '@database';
-import { Request, Response } from 'express';
+import { ResponseUserId } from '@dtos/responseUserId';
+import { Request } from 'express';
 
-async function updateUser(req: Request, res: Response) {
-	const { id } = req.params;
+async function updateUser(req: Request, res: ResponseUserId) {
+	const id = res.locals.userId;
 	const body = req.body;
 
 	const user = await prisma.user.update({
