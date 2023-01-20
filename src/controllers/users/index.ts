@@ -1,17 +1,18 @@
 import { Router } from 'express';
-import { createUser } from './handle/createUser';
-import { getUser } from './handle/getUser';
-import { updateUser } from './handle/updateUser';
-import { deleteUser } from './handle/deleteUser';
+import { createUser } from './createUser';
+import { getUser } from './getUser';
+import { updateUser } from './updateUser';
+import { deleteUser } from './deleteUser';
+import { checkToken } from '../../middlewares/checkToken';
 
 const Users = Router();
 
 Users.post('/', createUser);
 
-Users.get('/:id', getUser);
+Users.get('/:id', checkToken, getUser);
 
-Users.patch('/:id', updateUser);
+Users.patch('/:id', checkToken, updateUser);
 
-Users.delete('/:id', deleteUser);
+Users.delete('/:id', checkToken, deleteUser);
 
 export default Users;
