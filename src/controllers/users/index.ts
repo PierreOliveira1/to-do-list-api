@@ -9,10 +9,10 @@ const Users = Router();
 
 Users.post('/', createUser);
 
-Users.get('/:id', checkToken, getUser);
+Users.get('/', checkToken, getUser);
 
-Users.patch('/:id', checkToken, updateUser);
+Users.patch('/', checkToken, updateUser);
 
-Users.delete('/:id', checkToken, deleteUser);
+Users.delete('/', checkToken, deleteUser);
 
 export default Users;
