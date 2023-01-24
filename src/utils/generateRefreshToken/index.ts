@@ -4,14 +4,16 @@ import dayjs from 'dayjs';
 async function generateRefreshToken(userId: string, id = '') {
 	const expiresIn = dayjs().add(1, 'D').unix();
 
-	const refreshTokenAlreadyExists = await prisma.refreshToken.findUnique({
-		where: {
-			id,
-		},
-	});
+	if (id) {
+		const refreshTokenAlreadyExists = await prisma.refreshToken.findUnique({
+			where: {
+				id,
+			},
+		});
 
-	if (refreshTokenAlreadyExists) {
-		await prisma.refreshToken.delete({ where: { id } });
+		if (refreshTokenAlreadyExists) {
+			await prisma.refreshToken.delete({ where: { id } });
+		}
 	}
 
 	await deleteAllRefreshTokenExpired(userId);
@@ -32,7 +34,7 @@ async function deleteAllRefreshTokenExpired(userId: string) {
 			userId,
 			AND: {
 				expiresIn: {
-					gte: dayjs().add(2, 'D').unix(),
+					lt: dayjs().unix(),
 				}
 			}
 		}
