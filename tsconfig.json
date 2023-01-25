@@ -105,7 +105,8 @@
 			"@database": ["./src/database/index"],
 			"@dtos/*": ["./src/dtos/*"],
 			"@routes": ["./src/routes/index"],
-			"@utils/*": ["./src/utils/*"]
+			"@utils/*": ["./src/utils/*"],
+			"@middlewares/*": ["./src/middlewares/*"]
 		}
 	}
 }
