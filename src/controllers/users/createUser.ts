@@ -26,6 +26,8 @@ async function createUser(req: Request, res: Response) {
 			email,
 			fullName,
 			password: hashPassword,
+			createdAt: new Date(),
+			updatedAt: new Date(),
 		},
 	});
 
