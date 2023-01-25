@@ -7,9 +7,9 @@ async function getAll(req: Request, res: ResponseUserId) {
 	const page = Number(req.query.page) || 1;
 	const results = Number(req.query.results) || 10;
 
-	const countToDoList = await prisma.toDoList.count();
+	const countTasks = await prisma.task.count();
 
-	const allToDoList = await prisma.toDoList.findMany({
+	const allTask = await prisma.task.findMany({
 		where: {
 			id,
 		},
@@ -17,16 +17,16 @@ async function getAll(req: Request, res: ResponseUserId) {
 		skip: page !== 1 ? page * results : 0,
 	});
 
-	const countPages = Math.floor(countToDoList / results);
+	const totalPages = Math.ceil(countTasks / results);
 
 	return res
 		.status(200)
 		.send({
-			data: allToDoList,
+			data: allTask,
 			pagination: {
 				current: page,
-				next: countPages !== page && page + 1,
-				totalPages: countPages,
+				next: totalPages !== page && page + 1,
+				total: totalPages,
 			}
 		});
 }
