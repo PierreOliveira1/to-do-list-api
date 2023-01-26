@@ -2,7 +2,7 @@ import { prisma } from '@database';
 import { ResponseUserId } from '@dtos/responseUserId';
 import { Request } from 'express';
 
-async function getUser(req: Request, res: ResponseUserId) {
+async function getUnique(req: Request, res: ResponseUserId) {
 	const id = res.locals.userId;
 
 	const user = await prisma.user.findFirst({
@@ -22,4 +22,4 @@ async function getUser(req: Request, res: ResponseUserId) {
 		.send({ id: user.id, fullName: user.fullName, email: user.email });
 }
 
-export { getUser };
+export { getUnique };

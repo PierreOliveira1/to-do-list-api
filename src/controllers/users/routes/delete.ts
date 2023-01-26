@@ -2,7 +2,7 @@ import { prisma } from '@database';
 import { ResponseUserId } from '@dtos/responseUserId';
 import { Request } from 'express';
 
-async function deleteUser(req: Request, res: ResponseUserId) {
+async function del(req: Request, res: ResponseUserId) {
 	const id = res.locals.userId;
 
 	try {
@@ -21,4 +21,4 @@ async function deleteUser(req: Request, res: ResponseUserId) {
 	}
 }
 
-export { deleteUser };
+export { del };
