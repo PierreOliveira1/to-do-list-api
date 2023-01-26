@@ -9,22 +9,22 @@ datasource db {
 
 model User {
   id        String   @id @default(uuid()) @map("_id")
-  fullName  String
+  fullName  String   @map("full_name")
   email     String   @unique
   password  String
   Room      Room     @relation(fields: [rooms], references: [id])
   rooms     String[]
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
 
   @@map("user")
 }
 
 model RefreshToken {
   id        String   @id @default(uuid()) @map("_id")
-  userId    String
-  expiresIn Int
-  createdAt DateTime
+  userId    String   @map("user_id")
+  expiresIn Int      @map("expires_in")
+  createdAt DateTime @default(now()) @map("created_at")
 
   @@map("refresh_token")
 }
@@ -34,8 +34,8 @@ model Room {
   name      String
   tasks     Task[]
   users     User[]
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
 
   @@map("room")
 }
@@ -44,9 +44,9 @@ model Task {
   id        String   @id @default(uuid()) @map("_id")
   message   String
   room      Room     @relation(fields: [roomId], references: [id])
-  roomId    String
-  createdAt DateTime
-  updatedAt DateTime
+  roomId    String   @map("room_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
 
   @@map("task")
 }
