@@ -25,7 +25,7 @@ async function generateRefreshToken(userId: string, id = '') {
 		},
 	});
 
-	return refreshToken;
+	return refreshToken.id;
 }
 
 async function deleteAllRefreshTokenExpired(userId: string) {
