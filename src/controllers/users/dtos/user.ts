@@ -1,4 +1,4 @@
-import { ToDoList } from './toDoList';
+import { ToDoList } from '@dtos/toDoList';
 
 export interface User {
 	id?: string;
