@@ -1,6 +1,6 @@
 import { ZodError } from 'zod';
 
-function mapIssues(errors: ZodError) {
+function mapIssuesZodError(errors: ZodError) {
 	const  issues = errors.issues.map(issue => {
 		return {
 			path: issue.path[0],
@@ -11,4 +11,4 @@ function mapIssues(errors: ZodError) {
 	return issues;
 }
 
-export { mapIssues };
+export { mapIssuesZodError };
