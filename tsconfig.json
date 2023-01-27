@@ -106,7 +106,8 @@
 			"@dtos/*": ["./src/dtos/*"],
 			"@routes": ["./src/routes/index"],
 			"@utils/*": ["./src/utils/*"],
-			"@middlewares/*": ["./src/middlewares/*"]
+			"@middlewares/*": ["./src/middlewares/*"],
+			"@validators/*": ["./src/validators/*"]
 		}
 	}
 }
