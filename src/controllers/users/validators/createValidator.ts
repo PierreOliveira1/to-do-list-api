@@ -1,7 +1,7 @@
+import { mapIssuesZodError } from '@utils/mapIssuesZodError';
 import { NextFunction, Request, Response } from 'express';
 import { z, ZodError } from 'zod';
-import { User } from '@dtos/user';
-import { mapIssues } from '../utils/mapIssues';
+import { User } from '../dtos/user';
 
 async function createValidator(req: Request, res: Response, next: NextFunction) {
 	const body: User = req.body;
@@ -21,9 +21,10 @@ async function createValidator(req: Request, res: Response, next: NextFunction) 
 				.status(400)
 				.send({
 					error: true,
-					issues: mapIssues(error),
+					issues: mapIssuesZodError(error),
 				});
 		}
+
 		return res
 			.status(500)
 			.send({ error: true, message: 'Internal server error' });

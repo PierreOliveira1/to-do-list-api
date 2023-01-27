@@ -1,7 +1,7 @@
-import { User } from '@dtos/user';
+import { User } from '../dtos/user';
 import { NextFunction, Request, Response } from 'express';
 import { z, ZodError } from 'zod';
-import { mapIssues } from '../utils/mapIssues';
+import { mapIssuesZodError } from '@utils/mapIssuesZodError';
 
 async function updateValidator(req: Request, res: Response, next: NextFunction) {
 	const body: User = req.body;
@@ -21,7 +21,7 @@ async function updateValidator(req: Request, res: Response, next: NextFunction) 
 				.status(400)
 				.send({
 					error: true,
-					issues: mapIssues(error),
+					issues: mapIssuesZodError(error),
 				});
 		}
 
