@@ -32,6 +32,7 @@ model RefreshToken {
 model Room {
   id        String   @id @default(uuid()) @map("_id")
   name      String
+  owner     String
   tasks     Task[]
   users     User[]
   createdAt DateTime @default(now()) @map("created_at")
