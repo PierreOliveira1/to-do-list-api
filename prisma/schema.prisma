@@ -44,6 +44,7 @@ model Room {
 model Task {
   id        String   @id @default(uuid()) @map("_id")
   message   String
+  checked   Boolean
   room      Room     @relation(fields: [roomId], references: [id])
   roomId    String   @map("room_id")
   createdAt DateTime @default(now()) @map("created_at")
