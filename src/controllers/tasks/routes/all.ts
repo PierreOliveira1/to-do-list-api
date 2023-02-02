@@ -2,7 +2,7 @@ import { prisma } from '@database';
 import { ResponseUserId } from '@dtos/responseUserId';
 import { Request } from 'express';
 
-async function getAll(req: Request, res: ResponseUserId) {
+async function all(req: Request, res: ResponseUserId) {
 	const id = res.locals.userId;
 	const page = Number(req.query.page) || 1;
 	const results = Number(req.query.results) || 10;
@@ -15,6 +15,9 @@ async function getAll(req: Request, res: ResponseUserId) {
 		},
 		take: results,
 		skip: page !== 1 ? page * results : 0,
+		orderBy: {
+			updatedAt: 'asc',
+		},
 	});
 
 	const totalPages = Math.ceil(countTasks / results);
@@ -31,4 +34,4 @@ async function getAll(req: Request, res: ResponseUserId) {
 		});
 }
 
-export { getAll };
+export { all };

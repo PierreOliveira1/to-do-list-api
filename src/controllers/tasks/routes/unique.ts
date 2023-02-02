@@ -2,7 +2,7 @@ import { prisma } from '@database';
 import { Request, Response } from 'express';
 import { z } from 'zod';
 
-async function getUnique(req: Request, res: Response) {
+async function unique(req: Request, res: Response) {
 	const id = req.params.id;
 
 	const idSchema = z.string().uuid({ message: 'UUID invalid' });
@@ -36,4 +36,4 @@ async function getUnique(req: Request, res: Response) {
 	}
 }
 
-export { getUnique };
+export { unique };

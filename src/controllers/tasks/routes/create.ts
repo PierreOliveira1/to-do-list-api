@@ -3,7 +3,7 @@ import { ResponseUserId } from '@dtos/responseUserId';
 import { Request } from 'express';
 import { z } from 'zod';
 
-async function createTask(req: Request, res: ResponseUserId) {
+async function create(req: Request, res: ResponseUserId) {
 	const message: string = req.body.message;
 	const userId: string = res.locals.userId;
 
@@ -41,4 +41,4 @@ async function createTask(req: Request, res: ResponseUserId) {
 	}
 }
 
-export { createTask };
+export { create };

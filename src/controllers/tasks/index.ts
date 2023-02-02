@@ -1,17 +1,14 @@
 import { Router } from 'express';
-import { checkToken } from '../../middlewares/checkToken';
-import { createTask } from './createTask';
-import { getAll } from './getAll';
-import { getUnique } from './getUnique';
-import { update } from './update';
+import { checkToken } from '@middlewares/checkToken';
+import { all, create, unique, update } from './routes';
 
 const Tasks = Router();
 
-Tasks.get('/', checkToken, getAll);
+Tasks.get('/', checkToken, all);
 
-Tasks.get('/:id', checkToken, getUnique);
+Tasks.get('/:id', checkToken, unique);
 
-Tasks.post('/', checkToken, createTask);
+Tasks.post('/', checkToken, create);
 
 Tasks.patch('/:id', checkToken, update);
 
